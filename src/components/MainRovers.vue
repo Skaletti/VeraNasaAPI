@@ -49,7 +49,8 @@ function handleRoverSelect(roverTitle) {
 .main-rovers {
     display: flex;
     justify-content: center;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+    max-height: 450px;
 }
 
 .rovers-list {
