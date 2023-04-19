@@ -19,6 +19,7 @@ export async function getRoverPhotos(params) {
       params
     })
 
+    // console.log(data)
     return data
   } catch (error) {
     console.error(error);
