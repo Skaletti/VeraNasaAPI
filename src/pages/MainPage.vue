@@ -6,14 +6,23 @@
                 <header-hero/>
             </el-header>
             <el-main>
+              <h1 class="d-f jc-c">Current rover: &nbsp;{{ params.roverName }}</h1>
+
                 <main-rovers @select-rover="selectRover"/>
                 <div class="result-modal">
                     <main-date-picker @change-date="selectDate"/>
-                    <ul v-infinite-scroll="loadMore" class="infinite-list" style="overflow: auto">
-                        <li v-for="roverImage in roverImages" :key="roverImage" class="infinite-list-item">
-                           <img :src="roverImage" alt="">
+                    {{ roverImages.length }}
+                    <ul
+                        v-infinite-scroll="loadMore"
+                        class="infinite-list"
+                        style="overflow: auto; max-height: 600px"
+                        :infinite-scroll-immediate="false"
+                    >
+                        <li v-for="roverImageData in roverImages" :key="roverImageData.id" class="infinite-list-item">
+                           <img :src="roverImageData.img_src" />
                         </li>
                     </ul>
+                  <p v-if="isNoImages">Закончився :(</p>
                 </div>
             </el-main>
             <el-footer>Footer</el-footer>
@@ -22,7 +31,7 @@
 </template>
 
 <script setup>
-import {reactive, ref} from 'vue'
+import { reactive, ref } from 'vue'
 import MainRovers from '../components/MainRovers.vue'
 import MainHeader from '../components/MainHeader.vue'
 import MainDatePicker from '../components/MainDatePicker.vue'
@@ -30,29 +39,29 @@ import MainDatePicker from '../components/MainDatePicker.vue'
 import {getRoverPhotos} from "@/api/getNasaApi.api.js"
 import HeaderHero from "@/components/HeaderHero.vue"
 
-const roverName = ref('')
-const currentDate = ref(new Date())
 const roverImages = ref([])
 
 const params = reactive({
-    roverName: roverName.value,
+    roverName: '',
     page: 1,
-    earthDate: currentDate.value
+    earthDate: ''
 })
 
-async function getRoverPhotoData() {
-    if (params.page < 10) {
-        const response = await getRoverPhotos({
-            rover_name: params.roverName,
-            page: params.page,
-            earth_date: params.earthDate
-        })
-        // roverImages.value = roverImages.value.concat(response.photos.map(({img_src}) => img_src))
+const isNoImages = ref(false)
 
-        roverImages.value = [...roverImages.value, ...response.photos]
-        console.log(roverImages.value)
+const  getRoverPhotoData = async () => {
+    const [error, response] = await getRoverPhotos(params.roverName, {
+        page: params.page,
+        earth_date: params.earthDate
+    })
+
+    if (!error && response) {
+      roverImages.value = [...roverImages.value, ...response.photos]
+
+      if (!response.photos.length) {
+        isNoImages.value = true
+      }
     }
-
 }
 
 const loadMore = async () => {
@@ -65,7 +74,7 @@ const selectRover = (roverTitle) => {
     params.roverName = roverTitle
 }
 
-async function selectDate(selectedDate) {
+const selectDate = async (selectedDate) => {
     params.earthDate = selectedDate
 
     await getRoverPhotoData()
