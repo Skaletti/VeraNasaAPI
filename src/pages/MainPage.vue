@@ -25,7 +25,7 @@
                   <p v-if="isNoImages">Закончився :(</p>
                 </div>
             </el-main>
-            <el-footer>Footer</el-footer>
+            <el-footer>Made by Vera Vozmisheva</el-footer>
         </el-container>
     </div>
 </template>
