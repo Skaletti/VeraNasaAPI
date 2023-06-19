@@ -25,17 +25,17 @@ const emits = defineEmits(['select-rover'])
 const roversList = [
     {
         title: 'Spirit',
-        url: '../src/assets/images/spirit-rover.jpg',
+        url: '/src/assets/images/spirit-rover.jpg',
         description: "Spirit"
     },
     {
         title: 'Opportunity',
-        url: '../src/assets/images/opportunity-rover.jpg',
+        url: '/src/assets/images/opportunity-rover.jpg',
         description: "Opportunity"
     },
     {
         title: 'Curiosity',
-        url: '../src/assets/images/curiosity-rover.jpg',
+        url: '/src/assets/images/curiosity-rover.jpg',
         description: "Curiosity"
     }
 ]
