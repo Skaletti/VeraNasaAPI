@@ -6,7 +6,7 @@
                 <header-hero/>
             </el-header>
             <el-main>
-              <h1 class="d-f jc-c">Current rover: &nbsp;{{ params.roverName }}</h1>
+              <h1 class="d-f jc-c">Current range rover: &nbsp;{{ params.roverName }}</h1>
 
                 <main-rovers @select-rover="selectRover"/>
                 <div class="result-modal">

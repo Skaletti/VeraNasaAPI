@@ -1,6 +1,6 @@
 <template>
     <div class="header-hero">
-        <h1>MARS ROVERS</h1>
+        <h1>MARS Range ROVERS</h1>
     </div>
 </template>
 
